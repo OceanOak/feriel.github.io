@@ -1,1 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Fira+Code:wght@400;500;600&family=Kode+Mono:wght@400..700&display=swap');
 @import "tailwindcss";
+
+.font-kodemono {
+    font-family: 'Kode Mono', monospace !important;
+}
+
+.font-assistant {
+    font-family: 'Assistant', sans-serif !important;
+}
+
+.font-firacode {
+    font-family: 'Fira Code', monospace !important;
+}
