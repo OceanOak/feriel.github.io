@@ -2,6 +2,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const terminalContent = document.getElementById('terminal-content');
     const terminalPrompt = document.getElementById('terminal-prompt');
     const terminalInputPlaceholder = document.getElementById('terminal-input-placeholder');
+    const pulsingCursor = document.querySelector('.inline-block.animate-pulse');
+
+    // Create but don't insert the input element yet
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.id = 'terminal-input';
+    input.className = 'bg-transparent outline-none text-gray-200 w-full';
+    input.autocomplete = 'off';
+    input.autocorrect = 'off';
+    input.autocapitalize = 'off';
+    input.spellcheck = false;
 
     // Command history
     let commandHistory = [];
@@ -13,33 +24,53 @@ document.addEventListener('DOMContentLoaded', function () {
         clear: 'Clear terminal screen'
     };
 
-    // Create an input element
-    const input = document.createElement('input');
-    input.type = 'text';
-    input.id = 'terminal-input';
-    input.className = 'bg-transparent outline-none text-gray-200 w-full';
-    input.autocomplete = 'off';
-    input.autocorrect = 'off';
-    input.autocapitalize = 'off';
-    input.spellcheck = false;
+    // Track if input is active
+    let inputActive = false;
 
-    // Replace the placeholder with the input
-    if (terminalInputPlaceholder) {
-        const inputContainer = terminalInputPlaceholder.parentNode;
-        inputContainer.replaceChild(input, terminalInputPlaceholder);
+    // Only replace the placeholder when terminal is clicked
+    terminalContent.addEventListener('click', function () {
+        if (!inputActive) {
+            activateInput();
+        } else {
+            input.focus();
+        }
+    });
 
-        // Remove the blinking cursor if it exists
-        const cursor = inputContainer.querySelector('.animate-pulse');
-        if (cursor) cursor.remove();
-    } else {
-        console.error('Terminal input placeholder not found');
+    function activateInput() {
+        if (terminalInputPlaceholder && !inputActive) {
+            const inputContainer = terminalInputPlaceholder.parentNode;
+            inputContainer.replaceChild(input, terminalInputPlaceholder);
+
+            // Remove the blinking cursor
+            const cursor = inputContainer.querySelector('.animate-pulse');
+            if (cursor) cursor.remove();
+
+            inputActive = true;
+            input.focus();
+        }
     }
 
-    // Focus input when terminal is clicked
-    if (terminalContent) {
-        terminalContent.addEventListener('click', function () {
-            input.focus();
-        });
+    function deactivateInput() {
+        if (inputActive && input.parentNode) {
+            // Only deactivate if input is empty
+            if (input.value === '') {
+                const inputContainer = input.parentNode;
+
+                // Recreate the placeholder and cursor
+                const placeholder = document.createElement('span');
+                placeholder.id = 'terminal-input-placeholder';
+                placeholder.className = 'text-gray-400';
+                placeholder.textContent = 'Type a command...';
+
+                const cursor = document.createElement('span');
+                cursor.className = 'inline-block w-1 h-4 bg-gray-400 ml-1 animate-pulse';
+
+                inputContainer.replaceChild(placeholder, input);
+                inputContainer.appendChild(cursor);
+
+                inputActive = false;
+            }
+        }
     }
 
     // Handle command execution
@@ -53,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Process command
         const args = command.trim().split(' ');
         const cmd = args[0].toLowerCase();
-        const param = args[1]; // Added this line to define param
+        const param = args[1];
 
         // Create new command output
         const output = document.createElement('div');
@@ -69,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         responseContainer.className = 'mt-2 pl-4';
 
         if (cmd === 'help') {
-            // Display help menu 
+            // Display help menu
             let helpText = '';
             helpText += `<div class="flex">
     <div class="w-44 text-gray-400">help</div>
@@ -122,7 +153,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (e.key === 'Enter') {
             executeCommand(input.value);
         } else if (e.key === 'ArrowUp') {
-            // Browse command history 
+            // Browse command history
             if (historyIndex < commandHistory.length - 1) {
                 historyIndex++;
                 input.value = commandHistory[historyIndex];
@@ -139,9 +170,19 @@ document.addEventListener('DOMContentLoaded', function () {
                 input.value = '';
             }
             e.preventDefault();
+        } else if (e.key === 'Escape') {
+            // Deactivate input on Escape
+            input.value = '';
+            deactivateInput();
+            e.preventDefault();
         }
     });
 
-    // Auto-focus the input when the page loads
-    input.focus();
+    // Deactivate input when clicking elsewhere
+    document.addEventListener('click', function (e) {
+        if (inputActive && !terminalContent.contains(e.target)) {
+            deactivateInput();
+        }
+    });
+
 });
