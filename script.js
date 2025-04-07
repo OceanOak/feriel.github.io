@@ -73,8 +73,19 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Function to check if a page exists
+    async function checkPageExists(url) {
+        try {
+            const response = await fetch(url, { method: 'HEAD' });
+            return response.ok;
+        } catch (error) {
+            console.error('Error checking page existence:', error);
+            return false;
+        }
+    }
+
     // Handle command execution
-    function executeCommand(command) {
+    async function executeCommand(command) {
         // Add command to history
         if (command.trim() !== '') {
             commandHistory.unshift(command);
@@ -117,8 +128,40 @@ document.addEventListener('DOMContentLoaded', function () {
             responseContainer.innerHTML = helpText;
         } else if (cmd === 'week') {
             if (param && !isNaN(param)) {
-                // Handle week command (todo)
-                responseContainer.textContent = `Accessing development challenges for week ${param}...`;
+                const weekNum = parseInt(param);
+
+                if (weekNum >= 1 && weekNum <= 100) {
+                    const weekUrl = `/week${weekNum}.html`;
+
+                    // Show "checking..." message while we verify if the page exists
+                    responseContainer.innerHTML = `Checking week ${weekNum}...`;
+                    output.appendChild(responseContainer);
+                    terminalContent.insertBefore(output, terminalPrompt);
+
+                    // Check if the page exists before navigating
+                    const pageExists = await checkPageExists(weekUrl);
+
+                    if (pageExists) {
+                        // Update the response if the page exists
+                        responseContainer.innerHTML = `
+                          Navigating to Week ${weekNum}...<br>
+                          <a href="${weekUrl}" class="text-[#A3D3FE] underline">Click here</a> if you're not automatically redirected.
+                        `;
+
+                        // Add a delay before navigation to show the message
+                        setTimeout(() => {
+                            window.location.href = weekUrl;
+                        }, 1000);
+                    } else {
+                        // Update the response if the page doesn't exist
+                        responseContainer.innerHTML = `
+                          <span class="text-yellow-400">Week ${weekNum} hasn't been published yet.</span><br>
+                          Check back later for updates.
+                        `;
+                    }
+                } else {
+                    responseContainer.innerHTML = `Error: Week number must be between 1 and 100.`;
+                }
             } else {
                 // No number provided
                 responseContainer.innerHTML = `Please specify a week number: <span class="text-purple-300">week [number]</span>`;
@@ -185,4 +228,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 
+    activateInput();
 });
