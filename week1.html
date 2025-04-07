@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Week 1</title>
+    <link rel="stylesheet" href="src/output.css">
+</head>
+
+<body class="bg-[#171717] text-gray-200 min-h-screen">
+    <header class="flex justify-between items-center py-8 px-20">
+        <div class="flex items-center">
+            <a href="/">
+                <img src="img/logo.png" alt="logo" class="h-14 w-auto">
+            </a>
+        </div>
+        <div class="text-gray-400 text-right font-kodemono">week <span class="text-[#C4B5E2]">01</span> / 100</div>
+    </header>
+
+    <div class="px-30 pt-20 pb-10 mb-8 font-kodemono">
+        <h1 class="text-7xl text-[#8B8B8B] mb-4 ">Week 1</h1>
+        <h2 class="text-4xl text-white mb-8">The Weekly Commit</h2>
+        <div class=" mb-16">
+            <div class="grid grid-cols-[repeat(35,22px)] gap-1">
+                <div class="aspect-square bg-[#444444] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <main class="max-w-5xl mx-auto px-4 font-firacode">
+        <article class="space-y-10">
+            <section>
+                <h2 class="text-2xl text-[#C4B5E2] font-semibold mb-6 border-b border-[#333333] pb-2">Website
+                    Development</h2>
+                <h3 class="text-xl text-[#A3D3FE] font-semibold mb-4">Frameworks Considered</h3>
+                <p class="mb-4">
+                    This week, I explored a few different web frameworks to figure out what would make the most
+                    sense for our website.
+                </p>
+
+                <div class="mb-4">
+                    <h4 class="text-lg text-[#DCA2DC] font-semibold mb-1">React + Next.js</h4>
+                    <p>
+                        This was one of the more full-featured options. Next.js comes with built-in routing,
+                        server-side rendering, static site generation, and even simple API routes. The
+                        file-based routing system is a big win—it automatically maps files in the app or pages
+                        directory to routes, which makes things super easy to manage and keeps everything really
+                        organized.
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="text-lg text-[#DCA2DC] font-semibold mb-1">React + react-router-dom</h4>
+                    <p>
+                        This combo gives you more flexibility and control, but also requires more setup and
+                        configuration. It's a solid option for single-page apps that don't need server-side
+                        rendering. I appreciated the simplicity, but there's a bit more boilerplate involved
+                        compared to something like Next.js. Also, things like code-splitting, metadata handling,
+                        and SEO need to be wired up manually. But if you're looking for a lightweight solution
+                        and don't need all the bells and whistles, this is a good choice.
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="text-lg text-[#DCA2DC] font-semibold mb-1">Astro</h4>
+                    <p>
+                        Astro was really interesting—it's heavily optimized for performance and ships very
+                        little JavaScript to the client. Perfect for mostly-static, content-driven sites. One of
+                        the standout features is the ability to use components from multiple frameworks (React,
+                        Vue, Svelte, etc.) in the same project.
+                    </p>
+                </div>
+
+                <div class="mb-4">
+                    <h4 class="text-lg text-[#DCA2DC] font-semibold mb-1">React with Vite</h4>
+                    <p>
+                        Instead of using Create React App, I decided to try Vite. It's a build tool that's super
+                        fast and has a great dev server. Vite is designed for modern web development and focuses
+                        on speed and performance. It uses native ES modules in the browser, which means you get
+                        instant hot module replacement (HMR) and really fast builds.
+                    </p>
+                </div>
+
+                <div class="italic text-gray-400 my-6">
+                    <p>
+                        Ironically, the hardest part of this entire process wasn't building the website—it was
+                        choosing the tech stack to build it with. There are so many options, each with their own
+                        trade-offs, and it's easy to fall into a rabbit hole trying to pick the "perfect" one.
+                        It honestly feels like half the challenge these days is just decision fatigue.
+                    </p>
+
+                    <p class="mt-2">
+                        It would be amazing to have one tool that handles everything cleanly—simple setup,
+                        reusable components, good SEO, easy routing, and low-maintenance development—without
+                        needing to piece together a bunch of tools and libraries.
+                    </p>
+                </div>
+
+                <p class="text-gray-300">
+                    After weighing everything, sticking with React (in some form) just makes sense for now.
+                </p>
+            </section>
+
+            <section>
+                <h3 class="text-xl text-[#A3D3FE] font-semibold mb-4">Building the Website</h3>
+                <div class="space-y-4">
+                    <p>
+                        For the initial structure of the website, I used Claude Desktop to speed things up. The
+                        current workflow is pretty straightforward: I take a screenshot of the Figma design, drop it
+                        into Claude Desktop, and ask it to generate the code using Model Context Protocol (MCP). I
+                        know there are MCPs for Figma, but I haven't had a chance to try them out yet.
+                    </p>
+
+                    <p>
+                        Claude is surprisingly good at capturing the overall layout and component structure.
+                        It's not the best with styling things yet, but it gives me a solid starting point. Once
+                        the initial code is generated, I go in and manually refine the styling to match the
+                        original design more closely.
+                    </p>
+
+                    <p>
+                        This setup has been really helpful for cutting down on boilerplate and letting me focus
+                        more on fine-tuning the UI and integrating functionality.
+                    </p>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="text-2xl text-[#C4B5E2] font-semibold mb-6 border-b border-[#333333] pb-2">Experimentation
+                    with Roo Code</h2>
+                <div class="space-y-4">
+                    <p>
+                        As part of our push to make AI more integrated in our day-to-day coding workflow, I spent
+                        time this week experimenting with Roo Code while building some functionalities in the REPL.
+                        The goal is to figure out how to make the AI more useful and less of a distraction. I wanted
+                        to see how Roo could help with that.
+                    </p>
+
+                    <p>
+                        Since this was a week focused on UX, a big part of the experimentation was seeing how
+                        Roo could help improve not just the code itself, but the overall developer experience. I
+                        played with different interaction patterns and workflows to see what worked best.
+                    </p>
+
+                    <h3 class="text-xl text-[#A3D3FE] font-semibold mt-6 mb-4">Practical AI Advice Learned</h3>
+                    <p>
+                        One of the most helpful insights was realizing how important small, frequent
+                        interactions are. Here are some guidelines I found useful and will likely turn into
+                        working habits:
+                    </p>
+
+                    <ul class="space-y-3 list-disc pl-5">
+                        <li>
+                            <span class="text-[#F6C177] font-semibold">Review constantly:</span> Don't wait until a
+                            large chunk is written—review AI suggestions as you go, it gets messy quickly, and there is
+                            a lot of noise in the suggestions. This helps keep the changes manageable and makes it
+                            easier to spot duplicate or irrelevant code.
+                        </li>
+                        <li>
+                            <span class="text-[#F6C177] font-semibold">Commit or stage changes</span> as soon as you're
+                            happy with them. This keeps the working state clean and reduces the mental overhead of
+                            tracking everything at once. Also makes it easier to roll back if needed.
+                        </li>
+                        <li>
+                            Roo seems to reference open tabs, so <span class="text-[#F6C177] font-semibold">keeping only
+                                the relevant files open</span> helps reduce noise in the context window.
+                        </li>
+                        <li>
+                            When the context window starts getting full, <span
+                                class="text-[#F6C177] font-semibold">asking Roo to summarize the current session</span>
+                            and then starting a new one makes the experience a lot smoother and keeps the model focused.
+                        </li>
+                    </ul>
+
+                    <h3 class="text-xl text-[#A3D3FE] font-semibold mt-6 mb-4">Rules and Expectations for Roo</h3>
+                    <p>
+                        To make the AI feel more predictable and aligned with how we work, I started drafting a
+                        few rules and expectations—things I'd like Roo to always follow when contributing code:
+                    </p>
+
+                    <ul class="space-y-3 list-disc pl-5">
+                        <li>
+                            <span class="text-[#F6C177] font-semibold">Avoid code duplication.</span> Prefer using
+                            existing utilities/components/functions before reaching for something new. Reuse over
+                            reinvention.
+                        </li>
+                        <li>
+                            <span class="text-[#F6C177] font-semibold">Only make the changes I explicitly
+                                request.</span> If something feels missing or incomplete, ask if I want to add it.
+                        </li>
+                        <li>
+                            <span class="text-[#F6C177] font-semibold">This is a production environment</span>—no
+                            mockups, placeholders, or dummy data unless asked or in tests.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </article>
+    </main>
+</body>
+
+</html>
