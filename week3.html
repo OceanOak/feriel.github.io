@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Week 3</title>
+    <link rel="stylesheet" href="src/output.css">
+</head>
+
+<body class="bg-[#171717] text-gray-200 min-h-screen">
+    <header class="flex justify-between items-center py-8 px-20">
+        <div class="flex items-center">
+            <a href="/">
+                <img src="img/logo.png" alt="logo" class="h-14 w-auto">
+            </a>
+        </div>
+        <div class="text-gray-400 text-right font-kodemono">week <span class="text-[#C4B5E2]">03</span> / 100</div>
+    </header>
+
+    <div class="px-30 pt-20 pb-10 mb-8 font-kodemono">
+        <h1 class="text-7xl text-[#8B8B8B] mb-4 ">Week 3</h1>
+        <h2 class="text-4xl text-white mb-8">Exploring Pusher</h2>
+        <div class=" mb-16">
+            <div class="grid grid-cols-[repeat(35,22px)] gap-1">
+                <div class="aspect-square bg-[#444444] rounded"></div>
+                <div class="aspect-square bg-[#444444] rounded"></div>
+                <div class="aspect-square bg-[#444444] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+                <div class="aspect-square bg-[#2A2A2A] rounded"></div>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-5xl mx-auto px-4 font-firacode mb-24">
+        <article class="space-y-10">
+            <section>
+                <h2 class="text-2xl text-[#C4B5E2] font-semibold mb-6 border-b border-[#333333] pb-2">Pusher</h2>
+                <p class="mb-4">
+                    Pusher is a platform that provides real-time communication APIs and infrastructure, allowing
+                    developers to build features like:
+                </p>
+                <ul class="space-y-3 list-disc pl-8 mb-6">
+                    <li>Live chat</li>
+                    <li>Real-time notifications</li>
+                    <li>Live dashboards</li>
+                    <li>Collaborative apps</li>
+                </ul>
+                <p class="mb-4">
+                    It's most known for its Channels and Beams products.
+                </p>
+
+                <div>
+                    <p class="mb-4">
+                        When a publisher sends data to a channel, Pusher uses WebSockets to instantly deliver that data
+                        to
+                        all subscribers who
+                        are listening.
+                    </p>
+                </div>
+                <div class="bg-[#1E1E1E] rounded-lg p-6 mb-8">
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Publisher</h4>
+                            <p class="text-sm">The user who sends (or "publishes") an event that others should know
+                                about.</p>
+                        </div>
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Subscriber</h4>
+                            <p class="text-sm">The user who listens for and reacts to those events.</p>
+                        </div>
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Channels</h4>
+                            <p class="text-sm">The connection between publishers and subscribers. Publishers send
+                                messages to a channel, and subscribers listen to that
+                                channel to get updates.</p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <section>
+                <h2 class="text-2xl text-[#C4B5E2] font-semibold mb-6 border-b border-[#333333] pb-2">Channels</h2>
+                <p class="mb-4">
+                    Channels uses WebSockets to push data from your server to clients instantly — without the client
+                    needing to constantly poll for updates.
+                </p>
+                <p class="mb-4">
+                    It's a hosted Pub/Sub messaging API that allows you to send and receive messages in real-time.
+                </p>
+
+                <div class="bg-[#1E1E1E] rounded-lg p-6 mb-8">
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">➤</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">WebSocket-based messaging:</span> Once a
+                                    client connects, the server can push updates in real-time.</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">➤</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">Hosted Pub/Sub messaging API:</span>
+                                    Pusher handles all the server infrastructure so you don't have to.</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">➤</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">For in-app real-time:</span> Getting info
+                                    instantly, no refresh (seeing who's online, etc.)</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">➤</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">Persistent connections:</span> Uses
+                                    WebSockets and HTTP to allow for persistent two-way connection between client and
+                                    server.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <h3 class="text-xl text-[#A3D3FE] font-semibold mb-4">Channel Types</h3>
+                <div class="bg-[#1E1E1E] rounded-lg p-6 mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Public Channels</h4>
+                            <p class="text-sm">Anyone can see, no restrictions</p>
+                        </div>
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Private Channels</h4>
+                            <p class="text-sm">Authentication required</p>
+                        </div>
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Presence Channels</h4>
+                            <p class="text-sm">Authentication required, you can see who is online</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="text-xl text-[#A3D3FE] font-semibold mb-4">Channels Dashboard</h3>
+                <p class="mb-4">
+                    The Channels dashboard gives you a live look at what is happening: connections, messages flowing,
+                    who is subscribed, and more.
+                </p>
+                <p class="mb-4">
+                    Realtime activity is shown in your Channels dashboard and can be sent to your system via webhooks.
+                </p>
+                <p class="mb-4">
+                    Channels is used for realtime charts, realtime user lists, realtime maps, multiplayer gaming, and
+                    many other kinds of UI updates.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="text-2xl text-[#C4B5E2] font-semibold mb-6 border-b border-[#333333] pb-2">Beams</h2>
+                <p class="mb-4">
+                    Beams handles push notifications and makes sending them easy.
+                </p>
+                <p class="mb-4">
+                    It's designed for out-of-app notifications, sending push notifications across various platforms.
+                    Pusher provides SDKs to make integration simple.
+                </p>
+
+                <h3 class="text-xl text-[#A3D3FE] font-semibold mb-4">Delivery Methods</h3>
+                <div class="bg-[#1E1E1E] rounded-lg p-6 mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Authenticated Users</h4>
+                            <p class="text-sm">Send notifications just to specific users (direct message notifications,
+                                etc.)</p>
+                        </div>
+                        <div class="bg-[#252525] p-4 rounded-lg">
+                            <h4 class="text-[#F6C177] font-semibold mb-2">Device Interests</h4>
+                            <p class="text-sm">Users subscribe to channels or topics (everyone subscribed to a channel
+                                will get the notification)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mb-4">
+                    Common use cases include tracking delivery drivers and transaction notifications from banks.
+                </p>
+
+                <h3 class="text-xl text-[#A3D3FE] font-semibold mb-4">Additional Features</h3>
+                <ul class="space-y-3 list-disc pl-8 mb-6">
+                    <li>
+                        <span class="text-[#F6C177] font-semibold">Hosted token management:</span>
+                        <p class="ml-2 mt-1">When a user installs your app, their device gets a unique push token from
+                            Google or Apple (essentially an address for notifications). These tokens can expire or
+                            change. Beams keeps the tokens fresh by communicating with platform gateways.</p>
+                    </li>
+                    <li>
+                        <span class="text-[#F6C177] font-semibold">Webhooks:</span>
+                        <p class="ml-2 mt-1">Let developers' own servers react to notifications, providing realtime
+                            observability into the notification service (from device registration to notification
+                            opened).</p>
+                    </li>
+                    <li>
+                        <span class="text-[#F6C177] font-semibold">Insights:</span>
+                        <p class="ml-2 mt-1">Monitor delivery rates, open rates, and more.</p>
+                    </li>
+                    <li>
+                        <span class="text-[#F6C177] font-semibold">Debug console:</span>
+                        <p class="ml-2 mt-1">Offers complete visibility into your notification service, tracking
+                            everything from initial device registration to when users open notifications.</p>
+                        <ul class="space-y-2 ml-2 text-sm text-[#A3D3FE]">
+                            <li>- <a href="https://docs.bird.com/pusher/channels/channels/troubleshooting/how-do-i-use-the-channels-debug-console-and-event-creator"
+                                    class="underline">How to use the Channels Debug Console and Event Creator</a></li>
+                            <li>- <a href="https://pusher.com/docs/channels/getting_started/debugging/#pusher_debug_console"
+                                    class="underline">Pusher debugging documentation</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-2xl text-[#C4B5E2] font-semibold mb-6 border-b border-[#333333] pb-2">Key Takeaways</h2>
+                <div class="bg-[#1E1E1E] rounded-lg p-6 mb-8">
+                    <ul class="space-y-4">
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">✓</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">Scalable, easy to integrate:</span> Pusher
+                                    provides hosted APIs that handle the complexity of real-time messaging and push
+                                    notifications.</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">✓</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">Two main products:</span> Channels for
+                                    in-app real-time updates, and Beams for push notifications.</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">✓</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">Publish-Subscribe model:</span> A simple
+                                    pattern where publishers send events through channels, and subscribers receive those
+                                    events.</p>
+                            </div>
+                        </li>
+                        <li class="flex">
+                            <div class="text-[#A3D3FE] font-semibold mr-2">✓</div>
+                            <div>
+                                <p><span class="text-[#A3D3FE] font-semibold">Developer-friendly:</span> Dashboard tools
+                                    help monitor your real-time applications and troubleshoot issues.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+        </article>
+    </main>
+</body>
+
+</html>
