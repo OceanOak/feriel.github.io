@@ -44,6 +44,7 @@ jobs:
         cp index.html deploy/
         cp script.js deploy/
         cp elm.js deploy/
+        cp CNAME deploy/
         cp src/output.css deploy/src/
         cp -r src/css deploy/src/
         cp -r img deploy/ 2>/dev/null || echo "img directory not found, skipping"
