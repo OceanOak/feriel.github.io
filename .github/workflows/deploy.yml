@@ -32,19 +32,11 @@ jobs:
     - name: Build Elm
       run: npm run elm:build:optimize
       
-    - name: Prepare deployment directory
-      run: |
-        mkdir -p deploy
-        cp index.html deploy/
-        cp script.js deploy/
-        cp elm.js deploy/
-        cp -r src/output.css deploy/src/
-        cp -r img deploy/
-        
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: deploy
-        publish_branch: gh-pages
+        publish_dir: ./
+        publish_branch: main
+        exclude_assets: '.github,elm-src,elm-stuff,node_modules,src/input.css,build.sh,package*.json,elm.json'
