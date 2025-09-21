@@ -1,0 +1,42 @@
+/* Custom styles for SVG background */
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none; /* Allow clicking through to elements beneath */
+  overflow: visible;
+}
+
+.background-shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ensure content is positioned properly relative to the background */
+.content-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+/* Media queries for responsive sizing */
+@media (max-width: 1511px) {
+  .background-shape {
+    /* Slightly adjust for screens narrower than the SVG's native width */
+    transform-origin: top left;
+  }
+}
+
+@media (max-height: 808px) {
+  .background-shape {
+    /* Slightly adjust for screens shorter than the SVG's native height */
+    transform-origin: top left;
+  }
+}

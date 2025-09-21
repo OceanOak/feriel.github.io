@@ -1,75 +1,111 @@
+// Initialize Elm app
 document.addEventListener('DOMContentLoaded', function () {
+    var app = Elm.Main.init({
+        node: document.getElementById('app')
+    });
+
+    // Terminal CLI functionality - wait a bit for Elm to render
+    setTimeout(initializeTerminal, 100);
+});
+
+function initializeTerminal() {
+    console.log('Initializing terminal...');
+
     const terminalContent = document.getElementById('terminal-content');
     const terminalPrompt = document.getElementById('terminal-prompt');
     const terminalInputPlaceholder = document.getElementById('terminal-input-placeholder');
-    const pulsingCursor = document.querySelector('.inline-block.animate-pulse');
 
-    // Create but don't insert the input element yet
+    console.log('Terminal elements:', {
+        content: terminalContent,
+        prompt: terminalPrompt,
+        placeholder: terminalInputPlaceholder
+    });
+
+    if (!terminalContent || !terminalPrompt || !terminalInputPlaceholder) {
+        console.error('Terminal elements not found, retrying in 500ms...');
+        setTimeout(initializeTerminal, 500);
+        return;
+    }
+
+    // Create input element
     const input = document.createElement('input');
     input.type = 'text';
     input.id = 'terminal-input';
-    input.className = 'bg-transparent outline-none text-gray-200 w-full';
+    input.className = 'bg-transparent outline-none text-white w-full font-firacode';
     input.autocomplete = 'off';
     input.autocorrect = 'off';
     input.autocapitalize = 'off';
     input.spellcheck = false;
+    input.placeholder = '';
 
     // Command history
     let commandHistory = [];
     let historyIndex = -1;
 
     const commands = {
-        help: 'Display this help menu',
-        week: 'Access specific week\'s dev challenges',
-        clear: 'Clear terminal screen'
+        help: 'Display available commands',
+        'week [num]': 'Navigate to specific week challenges',
+        clear: 'Clear terminal output',
+        about: 'Learn more about Feriel',
     };
 
     // Track if input is active
     let inputActive = false;
 
-    // Only replace the placeholder when terminal is clicked
-    terminalContent.addEventListener('click', function () {
+    // Terminal click handler
+    terminalContent.addEventListener('click', function (e) {
+        console.log('Terminal clicked, inputActive:', inputActive);
+        e.stopPropagation();
+
         if (!inputActive) {
+            console.log('Activating input...');
             activateInput();
         } else {
+            console.log('Input already active, focusing...');
             input.focus();
         }
     });
 
     function activateInput() {
-        if (terminalInputPlaceholder && !inputActive) {
-            const inputContainer = terminalInputPlaceholder.parentNode;
-            inputContainer.replaceChild(input, terminalInputPlaceholder);
+        const placeholder = document.getElementById('terminal-input-placeholder');
+        if (placeholder && placeholder.parentNode) {
+            console.log('Replacing placeholder with input');
 
-            // Remove the blinking cursor
-            const cursor = inputContainer.querySelector('.animate-pulse');
+            // Remove cursor span if it exists
+            const cursor = placeholder.parentNode.querySelector('.terminal-cursor');
             if (cursor) cursor.remove();
+
+            // Replace placeholder with input
+            placeholder.parentNode.replaceChild(input, placeholder);
 
             inputActive = true;
             input.focus();
+            console.log('Input activated and focused');
+        } else {
+            console.error('Could not find placeholder element');
         }
     }
 
     function deactivateInput() {
-        if (inputActive && input.parentNode) {
-            // Only deactivate if input is empty
-            if (input.value === '') {
-                const inputContainer = input.parentNode;
+        if (inputActive && input.parentNode && input.value.trim() === '') {
+            console.log('Deactivating input...');
 
-                // Recreate the placeholder and cursor
-                const placeholder = document.createElement('span');
-                placeholder.id = 'terminal-input-placeholder';
-                placeholder.className = 'text-gray-400';
-                placeholder.textContent = 'Type a command...';
+            const inputContainer = input.parentNode;
 
-                const cursor = document.createElement('span');
-                cursor.className = 'inline-block w-1 h-4 bg-gray-400 ml-1 animate-pulse';
+            // Recreate the placeholder and cursor
+            const placeholder = document.createElement('span');
+            placeholder.id = 'terminal-input-placeholder';
+            placeholder.className = 'text-gray-500 font-quicksand';
+            placeholder.textContent = 'Type a command...';
 
-                inputContainer.replaceChild(placeholder, input);
-                inputContainer.appendChild(cursor);
+            const cursor = document.createElement('span');
+            cursor.className = 'terminal-cursor inline-block w-2 h-4 ml-1';
 
-                inputActive = false;
-            }
+            inputContainer.replaceChild(placeholder, input);
+            inputContainer.appendChild(cursor);
+
+            inputActive = false;
+            console.log('Input deactivated');
         }
     }
 
@@ -86,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle command execution
     async function executeCommand(command) {
+        console.log('Executing command:', command);
+
         // Add command to history
         if (command.trim() !== '') {
             commandHistory.unshift(command);
@@ -101,30 +139,25 @@ document.addEventListener('DOMContentLoaded', function () {
         const output = document.createElement('div');
         output.className = 'mb-4';
 
-        // Add command to output
+        // Add command to output with modern styling
         const commandLine = document.createElement('div');
-        commandLine.innerHTML = `<span class="text-[#DCA2DC]">></span> ${command}`;
+        commandLine.innerHTML = `<div class="flex items-center"><span class="cli-prompt mr-2">❯</span><span class="cli-command">${command}</span></div>`;
         output.appendChild(commandLine);
 
         // Command responses
         const responseContainer = document.createElement('div');
-        responseContainer.className = 'mt-2 pl-4';
+        responseContainer.className = 'mt-2 pl-4 cli-output';
 
         if (cmd === 'help') {
-            // Display help menu
-            let helpText = '';
-            helpText += `<div class="flex">
-    <div class="w-44 text-gray-400">help</div>
-    <div class="text-gray-400">${commands.help}</div>
-  </div>`;
-            helpText += `<div class="flex">
-    <div class="w-44 text-gray-400">week [number]</div>
-    <div class="text-gray-400">${commands.week}</div>
-  </div>`;
-            helpText += `<div class="flex">
-    <div class="w-44 text-gray-400">clear</div>
-    <div class="text-gray-400">${commands.clear}</div>
-  </div>`;
+            // Display help menu with modern styling
+            let helpText = '<div class="space-y-2">';
+            Object.entries(commands).forEach(([cmd, desc]) => {
+                helpText += `<div class="flex">
+                    <div class="w-24 cli-command font-firacode">${cmd}</div>
+                    <div class="text-gray-300 font-quicksand">${desc}</div>
+                </div>`;
+            });
+            helpText += '</div>';
             responseContainer.innerHTML = helpText;
         } else if (cmd === 'week') {
             if (param && !isNaN(param)) {
@@ -133,39 +166,47 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (weekNum >= 1 && weekNum <= 100) {
                     const weekUrl = `/week${weekNum}.html`;
 
-                    // Show "checking..." message while we verify if the page exists
-                    responseContainer.innerHTML = `Checking week ${weekNum}...`;
+                    // Show "checking..." message
+                    responseContainer.innerHTML = `<span class="cli-output">🔍 Checking week ${weekNum}...</span>`;
                     output.appendChild(responseContainer);
                     terminalContent.insertBefore(output, terminalPrompt);
 
-                    // Check if the page exists before navigating
+                    // Check if the page exists
                     const pageExists = await checkPageExists(weekUrl);
 
                     if (pageExists) {
-                        // Update the response if the page exists
                         responseContainer.innerHTML = `
-                          Navigating to Week ${weekNum}...<br>
-                          <a href="${weekUrl}" class="text-[#A3D3FE] underline">Click here</a> if you're not automatically redirected.
+                          <div class="space-y-1">
+                            <div class="cli-output">✅ Week ${weekNum} found!</div>
+                            <div class="cli-output">🚀 <a href="${weekUrl}" class="cli-command underline hover:no-underline">Navigate to Week ${weekNum}</a></div>
+                          </div>
                         `;
 
-                        // Add a delay before navigation to show the message
                         setTimeout(() => {
                             window.location.href = weekUrl;
                         }, 1000);
                     } else {
-                        // Update the response if the page doesn't exist
                         responseContainer.innerHTML = `
-                          <span class="text-yellow-400">Week ${weekNum} hasn't been published yet.</span><br>
-                          Check back later for updates.
+                          <div class="space-y-1">
+                            <div class="cli-warning">⚠️ Week ${weekNum} hasn't been published yet</div>
+                            <div class="cli-output">Check back later for updates! 📅</div>
+                          </div>
                         `;
                     }
                 } else {
-                    responseContainer.innerHTML = `Error: Week number must be between 1 and 100.`;
+                    responseContainer.innerHTML = `<span class="cli-error">❌ Week number must be between 1 and 100</span>`;
                 }
             } else {
-                // No number provided
-                responseContainer.innerHTML = `Please specify a week number: <span class="text-purple-300">week [number]</span>`;
+                responseContainer.innerHTML = `<span class="cli-output">📝 Usage: <span class="cli-command">week [number]</span></span>`;
             }
+        } else if (cmd === 'about') {
+            responseContainer.innerHTML = `
+              <div class="space-y-2 cli-output">
+                <div>👋 Hi! I'm Feriel, a developer passionate about creating accessible products</div>
+                <div>🛠️ I love transforming complex ideas into simple, user-friendly solutions</div>
+                <div>🚀 Currently working on my 100 weeks of development challenges</div>
+              </div>
+            `;
         } else if (cmd === 'clear') {
             if (terminalContent) {
                 const allOutputs = terminalContent.querySelectorAll('div.mb-4');
@@ -177,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function () {
             // Empty command
             return;
         } else {
-            responseContainer.innerHTML = `Command not found: <span class="text-red-400">${cmd}</span>. Type <span class="text-purple-300">help</span> to see available commands.`;
+            responseContainer.innerHTML = `<div class="space-y-1"><span class="cli-error">❌ Command not found: ${cmd}</span><div class="cli-output">Type <span class="cli-command">help</span> to see available commands</div></div>`;
         }
 
         output.appendChild(responseContainer);
@@ -185,6 +226,12 @@ document.addEventListener('DOMContentLoaded', function () {
         // Insert the output before the prompt
         if (terminalPrompt && terminalContent) {
             terminalContent.insertBefore(output, terminalPrompt);
+
+            // Auto-scroll to bottom
+            const scrollContainer = terminalContent.parentElement;
+            if (scrollContainer) {
+                scrollContainer.scrollTop = scrollContainer.scrollHeight;
+            }
         }
 
         // Clear input
@@ -193,14 +240,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Handle input keypress
     input.addEventListener('keydown', function (e) {
+        console.log('Key pressed:', e.key);
+
         if (e.key === 'Enter') {
             executeCommand(input.value);
         } else if (e.key === 'ArrowUp') {
-            // Browse command history
             if (historyIndex < commandHistory.length - 1) {
                 historyIndex++;
                 input.value = commandHistory[historyIndex];
-                // Move cursor to end
                 setTimeout(() => input.selectionStart = input.selectionEnd = input.value.length, 0);
             }
             e.preventDefault();
@@ -214,19 +261,21 @@ document.addEventListener('DOMContentLoaded', function () {
             }
             e.preventDefault();
         } else if (e.key === 'Escape') {
-            // Deactivate input on Escape
             input.value = '';
+            input.blur();
             deactivateInput();
             e.preventDefault();
         }
     });
 
-    // Deactivate input when clicking elsewhere
+    // Click outside to deactivate (only if empty)
     document.addEventListener('click', function (e) {
         if (inputActive && !terminalContent.contains(e.target)) {
-            deactivateInput();
+            if (input.value.trim() === '') {
+                deactivateInput();
+            }
         }
     });
 
-    activateInput();
-});
+    console.log('Terminal initialization complete');
+}
