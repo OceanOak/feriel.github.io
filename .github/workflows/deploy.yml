@@ -14,9 +14,6 @@ permissions:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     
     steps:
     - uses: actions/checkout@v4
@@ -61,17 +58,36 @@ jobs:
         find deploy -type f
         echo "Build test successful - ready for deployment"
         
-    - name: Setup Pages
+    - name: Upload deployment artifact
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      uses: actions/upload-artifact@v4
+      with:
+        name: deployment-files
+        path: deploy
+        
+  deploy:
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+      
+    steps:
+    - name: Download deployment artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: deployment-files
+        path: deploy
+        
+    - name: Setup Pages
       uses: actions/configure-pages@v4
       
-    - name: Upload artifact
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    - name: Upload to Pages
       uses: actions/upload-pages-artifact@v3
       with:
         path: deploy
         
     - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       id: deployment
       uses: actions/deploy-pages@v4
