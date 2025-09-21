@@ -1,0 +1,50 @@
+/* Custom responsive styles */
+html, body {
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Ensure proper scaling on 2xl screens */
+@media (min-width: 1536px) {
+  .content-container {
+    max-width: 1536px;
+    margin: 0 auto;
+  }
+  
+  /* Increase line heights for better readability */
+  .text-4xl, .text-5xl, .text-6xl, .text-7xl {
+    line-height: 1.2;
+  }
+  
+  /* Make terminal text more readable */
+  .terminal-content {
+    line-height: 1.5;
+  }
+  
+  /* Enhance week grid appearance */
+  .week-grid-container {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile specific adjustments */
+@media (max-width: 767px) {
+  .terminal-content {
+    max-height: 300px;
+  }
+  
+  .week-grid-container {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+}
+
+/* Hide scrollbars but allow scrolling */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}

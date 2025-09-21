@@ -1,0 +1,149 @@
+/* Custom animations and styles for the portfolio */
+
+/* Smooth wave animation for the greeting emoji */
+@keyframes wave {
+  0%, 100% { transform: rotate(0deg) }
+  25% { transform: rotate(20deg) }
+  75% { transform: rotate(-10deg) }
+}
+
+.animate-wave {
+  animation: wave 2s ease-in-out infinite;
+  transform-origin: 70% 70%;
+}
+
+/* Floating animation for the isometric illustration */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) }
+  50% { transform: translateY(-10px) }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Subtle glow effect for navigation buttons */
+.nav-glow:hover {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+/* Terminal cursor blink */
+@keyframes blink {
+  0%, 50% { opacity: 1 }
+  51%, 100% { opacity: 0 }
+}
+
+.cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+/* Stars twinkling effect */
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(1) }
+  50% { opacity: 1; transform: scale(1.2) }
+}
+
+.animate-twinkle {
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+/* Gradient text effect */
+.gradient-text {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* Fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* Airplane flying animation */
+@keyframes fly {
+  0% {
+    transform: translateX(-100px) translateY(10px);
+  }
+  50% {
+    transform: translateX(50vw) translateY(-10px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 100px)) translateY(5px);
+  }
+}
+
+.animate-fly {
+  animation: fly 20s linear infinite;
+}
+
+/* Typing animation for terminal */
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.animate-typing {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: typing 2s steps(40, end);
+}
+
+/* Hover effects for interactive elements */
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .animate-float {
+    animation-duration: 4s;
+  }
+  
+  .text-5xl {
+    font-size: 2.5rem;
+  }
+  
+  .lg\:text-6xl {
+    font-size: 3rem;
+  }
+}

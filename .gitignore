@@ -1,3 +1,31 @@
-node_modules
-.vscode
+node_modules/
 .DS_Store
+.vscode/
+*.log
+dist/
+build/
+
+# Elm
+elm-stuff/
+elm.js
+
+# Generated files
+src/output.css
+
+# IDE files
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+*.tmp
+
+# NPM
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Optional: Backup files
+*.bak
+*~

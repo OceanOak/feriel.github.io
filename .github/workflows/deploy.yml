@@ -1,0 +1,42 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Setup Elm
+      uses: jorelali/setup-elm@v5
+      with:
+        elm-version: 0.19.1
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Build CSS
+      run: npm run css:build
+      
+    - name: Build Elm
+      run: npm run elm:build:optimize
+      
+    - name: Deploy to GitHub Pages
+      if: github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./
+        publish_branch: main
+        exclude_assets: '.github,elm-src,elm-stuff,node_modules,src/input.css,build.sh,package*.json,elm.json'

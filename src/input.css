@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@700&family=Fira+Code:wght@400;500;600&family=Kode+Mono:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&family=Kode+Mono:wght@400..700&display=swap');
 @import "tailwindcss";
 
 .font-kodemono {
@@ -11,4 +11,73 @@
 
 .font-firacode {
     font-family: 'Fira Code', monospace !important;
+}
+
+.font-quicksand {
+    font-family: 'Quicksand', sans-serif !important;
+}
+
+/* CLI Terminal Styling */
+.cli-terminal {
+    background: linear-gradient(135deg, #2D2D2D 0%, #1E1E1E 100%);
+    border: 1px solid #404040;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.cli-terminal-header {
+    background: linear-gradient(180deg, #3A3A3A 0%, #2D2D2D 100%);
+    border-bottom: 1px solid #404040;
+}
+
+.cli-content {
+    background: transparent;
+}
+
+/* Custom scrollbar for terminal */
+.cli-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cli-content::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.cli-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.cli-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.cli-prompt {
+    color: #B882B8;
+}
+
+.cli-command {
+    color: #88AAFF;
+}
+
+.cli-output {
+    color: #CCCCCC;
+}
+
+.cli-error {
+    color: #FF6B6B;
+}
+
+.cli-warning {
+    color: #FFD93D;
+}
+
+.terminal-cursor {
+    background: #B882B8;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
 }
