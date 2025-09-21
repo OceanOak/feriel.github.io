@@ -3,8 +3,6 @@ name: Build and Deploy
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build-and-deploy:
@@ -32,14 +30,25 @@ jobs:
     - name: Build Elm
       run: npm run elm:build:optimize
       
+    - name: Verify built files
+      run: |
+        echo "Checking if files exist:"
+        ls -la elm.js || echo "elm.js not found"
+        ls -la src/output.css || echo "src/output.css not found"
+        echo "Repository contents:"
+        find . -name "*.css" -o -name "*.js" -o -name "*.html" | head -20
+        
     - name: Prepare deployment directory
       run: |
-        mkdir -p deploy
+        mkdir -p deploy/src/css
         cp index.html deploy/
         cp script.js deploy/
         cp elm.js deploy/
-        cp -r src/output.css deploy/src/
-        cp -r img deploy/
+        cp src/output.css deploy/src/
+        cp -r src/css deploy/src/
+        cp -r img deploy/ 2>/dev/null || echo "img directory not found, skipping"
+        echo "Deployment directory contents:"
+        find deploy -type f
         
     - name: Deploy to GitHub Pages
       if: github.ref == 'refs/heads/main'
