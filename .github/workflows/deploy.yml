@@ -3,9 +3,11 @@ name: Build and Deploy
 on:
   push:
     branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
     
     steps:
@@ -35,10 +37,9 @@ jobs:
         echo "Checking if files exist:"
         ls -la elm.js || echo "elm.js not found"
         ls -la src/output.css || echo "src/output.css not found"
-        echo "Repository contents:"
-        find . -name "*.css" -o -name "*.js" -o -name "*.html" | head -20
+        echo "Build verification complete"
         
-    - name: Prepare deployment directory
+    - name: Prepare deployment directory (for testing)
       run: |
         mkdir -p deploy/src/css
         cp index.html deploy/
@@ -50,13 +51,12 @@ jobs:
         cp -r img deploy/ 2>/dev/null || echo "img directory not found, skipping"
         echo "Deployment directory contents:"
         find deploy -type f
+        echo "Build test successful - ready for deployment"
         
-
     - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main'
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./
-        publish_branch: main
-        exclude_assets: '.github,elm-src,elm-stuff,node_modules,src/input.css,build.sh,package*.json,elm.json'
+        publish_dir: deploy
+        publish_branch: gh-pages
