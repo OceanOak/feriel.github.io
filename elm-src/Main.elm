@@ -1,8 +1,32 @@
 module Main exposing (main)
 
 import Browser
-import Html exposing (Html, div, h1, img, p, span, text)
-import Html.Attributes exposing (alt, class, id, src, style)
+import Browser.Navigation as Nav
+import Components.Terminal
+import Html exposing (Html, a, div, h1, img, p, span, text)
+import Html.Attributes exposing (alt, class, href, id, src, style)
+import Pages.Hobbies
+import Pages.Projects
+import Pages.Reading
+import Pages.Research
+import Url
+import Url.Parser as Parser exposing (Parser, oneOf, s)
+
+
+
+-- MAIN
+
+
+main : Program () Model Msg
+main =
+    Browser.application
+        { init = init
+        , view = view
+        , update = update
+        , subscriptions = subscriptions
+        , onUrlChange = UrlChanged
+        , onUrlRequest = LinkClicked
+        }
 
 
 
@@ -10,12 +34,48 @@ import Html.Attributes exposing (alt, class, id, src, style)
 
 
 type alias Model =
-    {}
+    { key : Nav.Key
+    , route : Route
+    }
 
 
-init : () -> ( Model, Cmd Msg )
-init _ =
-    ( {}, Cmd.none )
+type Route
+    = Home
+    | Reading
+    | Hobbies
+    | Projects
+    | Research
+    | NotFound
+
+
+init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init _ url key =
+    ( { key = key
+      , route = parseUrl url
+      }
+    , Cmd.none
+    )
+
+
+
+-- ROUTING
+
+
+routeParser : Parser (Route -> a) a
+routeParser =
+    oneOf
+        [ Parser.map Home Parser.top
+        , Parser.map Reading (s "reading")
+        , Parser.map Hobbies (s "hobbies")
+        , Parser.map Projects (s "projects")
+        , Parser.map Research (s "research")
+        ]
+
+
+parseUrl : Url.Url -> Route
+parseUrl url =
+    Parser.parse routeParser url
+        |> Maybe.withDefault NotFound
 
 
 
@@ -23,124 +83,198 @@ init _ =
 
 
 type Msg
-    = NoOp
+    = LinkClicked Browser.UrlRequest
+    | UrlChanged Url.Url
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        NoOp ->
-            ( model, Cmd.none )
+        LinkClicked urlRequest ->
+            case urlRequest of
+                Browser.Internal url ->
+                    ( model, Nav.pushUrl model.key (Url.toString url) )
+
+                Browser.External href ->
+                    ( model, Nav.load href )
+
+        UrlChanged url ->
+            ( { model | route = parseUrl url }, Cmd.none )
+
+
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Sub.none
 
 
 
 -- VIEW
 
 
-view : Model -> Html Msg
+view : Model -> Browser.Document Msg
 view model =
+    { title = getPageTitle model.route
+    , body = [ viewPage model.route ]
+    }
+
+
+getPageTitle : Route -> String
+getPageTitle route =
+    case route of
+        Home ->
+            "Feriel's Website"
+
+        Reading ->
+            "Reading"
+
+        Hobbies ->
+            "Hobbies"
+
+        Projects ->
+            "Projects"
+
+        Research ->
+            "Research"
+
+        NotFound ->
+            "Not Found"
+
+
+viewPage : Route -> Html Msg
+viewPage route =
+    case route of
+        Home ->
+            viewHome
+
+        Reading ->
+            Pages.Reading.view
+
+        Hobbies ->
+            Pages.Hobbies.view
+
+        Projects ->
+            Pages.Projects.view
+
+        Research ->
+            Pages.Research.view
+
+        NotFound ->
+            viewNotFound
+
+
+
+-- HOME PAGE
+
+
+viewHome : Html Msg
+viewHome =
     div [ class "min-h-screen text-white flex flex-col relative overflow-hidden font-quicksand", style "background-color" "#1E1E1E" ]
-        [ -- Star in top right
-          img
-            [ src "img/star.png"
-            , alt "Star"
-            , class "absolute top-8 right-8 w-8 h-8 opacity-80"
+        [ viewStar
+        , viewMainContent
+        , viewFolderIcons
+        ]
+
+
+viewStar : Html Msg
+viewStar =
+    img
+        [ src "img/star.png"
+        , alt "Star"
+        , class "absolute top-8 right-8 w-8 h-8 opacity-80"
+        ]
+        []
+
+
+viewMainContent : Html Msg
+viewMainContent =
+    div [ class "flex-1 flex items-center justify-center py-8" ]
+        [ div [ class "max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" ]
+            [ viewLeftContent
+            , viewCatImage
+            ]
+        ]
+
+
+viewLeftContent : Html Msg
+viewLeftContent =
+    div [ class "space-y-8" ]
+        [ viewHeader
+        , viewDescription
+        , viewTerminal
+        ]
+
+
+viewHeader : Html Msg
+viewHeader =
+    div [ class "flex items-center gap-3" ]
+        [ h1 [ class "text-7xl font-bold text-white font-quicksand" ] [ text "Hey Folks" ]
+        , span [ class "text-4xl" ] [ text "👋" ]
+        ]
+
+
+viewDescription : Html Msg
+viewDescription =
+    p [ class "text-2xl text-gray-300 leading-relaxed max-w-lg font-quicksand font-medium" ]
+        [ text "I'm Feriel. I enjoy transforming complex ideas into simple, accessible products that anyone can use" ]
+
+
+viewTerminal : Html Msg
+viewTerminal =
+    Components.Terminal.viewTerminal "terminal-content" "terminal-prompt" "terminal-input-placeholder"
+
+
+viewCatImage : Html Msg
+viewCatImage =
+    div [ class "flex justify-end items-end relative h-full min-h-96" ]
+        [ img
+            [ src "img/cat-workshop.png"
+            , alt "Cute cats working together in a workshop"
+            , class "max-w-full h-auto drop-shadow-2xl transform translate-x-8 translate-y-12"
             ]
             []
+        ]
 
-        -- Main content area
-        , div [ class "flex-1 flex items-center justify-center py-8" ]
-            [ div [ class "max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" ]
-                [ -- Left side content
-                  div [ class "space-y-8" ]
-                    [ -- Header
-                      div [ class "flex items-center gap-3" ]
-                        [ h1 [ class "text-7xl font-bold text-white font-quicksand" ] [ text "Hey Folks" ]
-                        , span [ class "text-4xl" ] [ text "👋" ]
-                        ]
 
-                    -- Description
-                    , p [ class "text-2xl text-gray-300 leading-relaxed max-w-lg font-quicksand font-medium" ]
-                        [ text "I'm Feriel. I enjoy transforming complex ideas into simple, accessible products that anyone can use." ]
-
-                    -- CLI Terminal
-                    , div [ class "cli-terminal rounded-xl max-w-xl overflow-hidden" ]
-                        [ -- Terminal header
-                          div [ class "cli-terminal-header px-4 py-3 flex items-center justify-between" ]
-                            [ div [ class "text-xs text-gray-400 font-quicksand font-medium" ] [ text "" ]
-                            , div [ class "flex items-center gap-2" ]
-                                [ div [ class "w-3 h-3 rounded-full shadow-lg", style "background-color" "#B882B8" ] []
-                                , div [ class "w-3 h-3 rounded-full shadow-lg", style "background-color" "#F6C17B" ] []
-                                , div [ class "w-3 h-3 rounded-full shadow-lg", style "background-color" "#AEC68B" ] []
-                                ]
-                            ]
-
-                        -- Terminal content with scrollable area
-                        , div [ class "cli-content max-h-64 overflow-y-auto p-6" ]
-                            [ div [ class "font-firacode text-sm space-y-3", id "terminal-content" ]
-                                [ div [ class "flex items-center" ]
-                                    [ span [ class "cli-prompt mr-2" ] [ text "❯" ]
-                                    , span [ class "text-gray-300" ] [ text "cat welcome.txt" ]
-                                    ]
-                                , div [ class "cli-output pl-4 mb-2" ] [ text "Welcome to my digital workspace! 🚀" ]
-                                , div [ class "cli-output pl-4 mb-4 text-gray-400" ] [ text "Type 'help' to see available commands" ]
-
-                                -- Interactive prompt
-                                , div [ class "flex items-center", id "terminal-prompt" ]
-                                    [ span [ class "cli-prompt mr-2" ] [ text "❯" ]
-                                    , span [ class "text-gray-500 font-quicksand", id "terminal-input-placeholder" ] [ text "Type a command..." ]
-                                    , span [ class "terminal-cursor inline-block w-2 h-4 ml-1" ] []
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-
-                -- Right side image
-                , div [ class "flex justify-end items-end relative h-full min-h-96" ]
-                    [ img
-                        [ src "img/cat-workshop.png"
-                        , alt "Cute cats working together in a workshop"
-                        , class "max-w-full h-auto drop-shadow-2xl transform translate-x-8 translate-y-12"
-                        ]
-                        []
-                    ]
-                ]
+viewFolderIcons : Html Msg
+viewFolderIcons =
+    div [ class "p-6" ]
+        [ div [ class "flex justify-center gap-6" ]
+            [ folderIcon "/projects" "img/Projects.png" "Projects"
+            , folderIcon "/reading" "img/Reading.png" "Reading"
+            , folderIcon "/research" "img/Research.png" "Research"
+            , folderIcon "/hobbies" "img/Hobbies.png" "Hobbies"
             ]
+        ]
 
-        -- Bottom folder icons
-        {- , div [ class "p-6" ]
-           [ div [ class "flex justify-end gap-6" ]
-               [ folderIcon "img/hobbies.png" "Hobbies"
-               , folderIcon "img/projects.png" "Projects"
-               , folderIcon "img/books.png" "Books"
-               , folderIcon "img/research.png" "Research"
-               ]
-           ]
-        -}
+
+folderIcon : String -> String -> String -> Html Msg
+folderIcon link imageSrc label =
+    a [ href link, class "flex flex-col items-center gap-2 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105 no-underline" ]
+        [ img
+            [ src imageSrc
+            , alt label
+            , class "w-18 h-14 drop-shadow-lg"
+            ]
+            []
+        , span [ class "text-xs text-gray-400 font-quicksand font-medium" ] [ text label ]
         ]
 
 
 
--- folderIcon : String -> String -> Html Msg
--- folderIcon imageSrc label =
---     div [ class "flex flex-col items-center gap-2 cursor-pointer hover:opacity-80 transition-all duration-300 hover:scale-105" ]
---         [ img
---             [ src imageSrc
---             , alt label
---             , class "w-14 h-14 drop-shadow-lg"
---             ]
---             []
---         , span [ class "text-xs text-gray-400 font-quicksand font-medium" ] [ text label ]
---         ]
--- MAIN
+-- NOT FOUND PAGE
 
 
-main : Program () Model Msg
-main =
-    Browser.element
-        { init = init
-        , update = update
-        , view = view
-        , subscriptions = \_ -> Sub.none
-        }
+viewNotFound : Html Msg
+viewNotFound =
+    div [ class "min-h-screen flex items-center justify-center font-quicksand", style "background-color" "#1E1E1E" ]
+        [ div [ class "text-center text-white" ]
+            [ h1 [ class "text-6xl font-bold mb-4" ] [ text "404" ]
+            , p [ class "text-xl text-gray-300 mb-8" ] [ text "Page not found" ]
+            , a [ href "/", class "text-purple-300 hover:text-purple-200 transition-colors text-lg" ]
+                [ text "← Back to Home" ]
+            ]
+        ]

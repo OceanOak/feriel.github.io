@@ -12,13 +12,14 @@
     "css:watch": "tailwindcss -i src/input.css -o src/output.css --watch",
     "build": "npm run css:build && npm run elm:build",
     "build:prod": "npm run css:build && npm run elm:build:optimize",
-    "dev": "concurrently \"npm run css:watch\" \"npm run elm:watch\" \"python3 -m http.server 8001\"",
-    "serve": "python3 -m http.server 8001",
+    "dev": "concurrently \"npm run css:watch\" \"npm run elm:watch\" \"serve -s -l 8000\"",
+    "serve": "serve -s -l 8000",
     "deploy": "npm run build:prod && echo 'Ready for GitHub Pages deployment!'"
   },
   "dependencies": {
     "@tailwindcss/cli": "^4.0.5",
-    "tailwindcss": "^4.0.5"
+    "tailwindcss": "^4.0.5",
+    "serve": "^14.2.0"
   },
   "devDependencies": {
     "chokidar-cli": "^3.0.0",
