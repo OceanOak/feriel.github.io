@@ -10,6 +10,17 @@
     <link rel="stylesheet" href="src/css/portfolio.css">
 </head>
 <body>
+    <script>
+        // Handle GitHub Pages SPA routing
+        (function(){
+            var redirect = sessionStorage.redirect;
+            delete sessionStorage.redirect;
+            if (redirect && redirect != location.pathname) {
+                history.replaceState(null, null, redirect);
+            }
+        })();
+    </script>
+    
     <div id="app"></div>
     
     <script src="elm.js"></script>
