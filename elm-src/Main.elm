@@ -243,10 +243,10 @@ viewFolderIcons : Html Msg
 viewFolderIcons =
     div [ class "p-6" ]
         [ div [ class "flex justify-center gap-6" ]
-            [ folderIcon "/projects" "img/Projects.png" "Projects"
+            [ folderIcon "/projects" "img/projects.png" "Projects"
             , folderIcon "/reading" "img/Reading.png" "Reading"
-            , folderIcon "/research" "img/Research.png" "Research"
-            , folderIcon "/hobbies" "img/Hobbies.png" "Hobbies"
+            , folderIcon "/research" "img/research.png" "Research"
+            , folderIcon "/hobbies" "img/hobbies.png" "Hobbies"
             ]
         ]
 
