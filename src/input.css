@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&family=Kode+Mono:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Anaheim&family=Fira+Code:wght@400;500;600&family=Kode+Mono:wght@400..700&display=swap');
 @import "tailwindcss";
 
 .font-kodemono {
@@ -17,15 +17,19 @@
     font-family: 'Quicksand', sans-serif !important;
 }
 
+.font-anaheim {
+    font-family: 'Anaheim', sans-serif !important;
+}
+
 /* CLI Terminal Styling */
 .cli-terminal {
-    background: linear-gradient(135deg, #2D2D2D 0%, #1E1E1E 100%);
+    background: linear-gradient(135deg, #1E1E1E 0%, #1A1A1A 100%);
     border: 1px solid #404040;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 }
 
 .cli-terminal-header {
-    background: linear-gradient(180deg, #3A3A3A 0%, #2D2D2D 100%);
+    background: linear-gradient(180deg, #2A2A2A 0%, #1E1E1E 100%);
     border-bottom: 1px solid #404040;
 }
 
