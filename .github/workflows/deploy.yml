@@ -48,6 +48,7 @@ jobs:
       run: |
         mkdir -p deploy/src/css
         cp index.html deploy/
+        cp 404.html deploy/
         cp script.js deploy/
         cp elm.js deploy/
         cp CNAME deploy/
